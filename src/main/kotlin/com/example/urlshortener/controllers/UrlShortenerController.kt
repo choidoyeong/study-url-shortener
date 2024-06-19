@@ -2,8 +2,9 @@ package com.example.urlshortener.controllers
 
 import com.example.urlshortener.controllers.requests.CreateShortUrlRequest
 import com.example.urlshortener.controllers.responses.ShortUrlResponse
-import com.example.urlshortener.models.ShortUrl
 import com.example.urlshortener.services.UrlShortenerService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,5 +23,11 @@ class UrlShortenerController(val service: UrlShortenerService) {
     fun getShortUrlByShortUrlId(@PathVariable shortUrlId: String): ShortUrlResponse {
         val shortUrl = service.getShortUrlByShortUrlId(shortUrlId)
         return ShortUrlResponse(shortUrlId = shortUrl.shortUrlId, url=shortUrl.url, createdAt = shortUrl.createdAt)
+    }
+
+    @GetMapping("/redirect/{shortUrlId}")
+    fun redirect(@PathVariable shortUrlId: String): ResponseEntity<Void> {
+        val shortUrl = service.getShortUrlByShortUrlId(shortUrlId)
+        return ResponseEntity.status(HttpStatus.FOUND).header("LOCATION", shortUrl.url).build()
     }
 }
