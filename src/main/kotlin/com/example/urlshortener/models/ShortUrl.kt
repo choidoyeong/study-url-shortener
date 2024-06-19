@@ -1,11 +1,12 @@
 package com.example.urlshortener.models
 
 import jakarta.persistence.*
-import java.time.LocalDateTime
+import org.springframework.data.annotation.CreatedDate
+import java.time.ZonedDateTime
 
 @Entity
-@Table(name = "url_shortener")
-data class UrlShortener(
+@Table(name = "short_url")
+data class ShortUrl(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -17,6 +18,7 @@ data class UrlShortener(
     val shortUrlId: String,
 
     @Column(nullable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @CreatedDate
+    val createdAt: ZonedDateTime = ZonedDateTime.now(),
 )
 
