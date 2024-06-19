@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class UrlShortenerController(val service: UrlShortenerService) {
@@ -21,13 +22,13 @@ class UrlShortenerController(val service: UrlShortenerService) {
 
     @GetMapping("/short-links/{shortUrlId}")
     fun getShortUrlByShortUrlId(@PathVariable shortUrlId: String): ShortUrlResponse {
-        val shortUrl = service.getShortUrlByShortUrlId(shortUrlId)
+        val shortUrl = service.getShortUrlByShortUrlId(shortUrlId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found Short Url")
         return ShortUrlResponse(shortUrlId = shortUrl.shortUrlId, url=shortUrl.url, createdAt = shortUrl.createdAt)
     }
 
     @GetMapping("/redirect/{shortUrlId}")
     fun redirect(@PathVariable shortUrlId: String): ResponseEntity<Void> {
-        val shortUrl = service.getShortUrlByShortUrlId(shortUrlId)
+        val shortUrl = service.getShortUrlByShortUrlId(shortUrlId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found Short Url")
         return ResponseEntity.status(HttpStatus.FOUND).header("LOCATION", shortUrl.url).build()
     }
 }
