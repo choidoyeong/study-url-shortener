@@ -19,4 +19,6 @@ class UrlShortenerService(val repository: ShortUrlRepository) {
         repository.save(shortUrl)
         return shortUrl
     }
+
+    fun getShortUrlByShortUrlId(shortUrlId: String): ShortUrl = repository.getByShortUrlId(shortUrlId)
 }

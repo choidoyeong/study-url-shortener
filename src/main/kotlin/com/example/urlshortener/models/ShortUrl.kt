@@ -17,7 +17,7 @@ data class ShortUrl(
     @Column(unique = true, nullable = false)
     val shortUrlId: String,
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition= "TIMESTAMP WITH TIME ZONE")
     @CreatedDate
     val createdAt: ZonedDateTime = ZonedDateTime.now(),
 )

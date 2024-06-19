@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ShortUrlRepository : CrudRepository<ShortUrl, Long> {}
+interface ShortUrlRepository : CrudRepository<ShortUrl, Long> {
+    fun getByShortUrlId(shortUrlId: String): ShortUrl
+}
