@@ -1,0 +1,19 @@
+version: '3.7'
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    container_name: url_shortener_postgres
+    image: postgres:14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "25432:5432"
+    logging:
+      driver: none
