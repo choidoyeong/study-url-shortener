@@ -11,7 +11,7 @@ class UrlShortenerService(val repository: ShortUrlRepository) {
     fun createShortURL(url: String): ShortUrl {
         val shortUrlId = Base64.getUrlEncoder().encodeToString(url.toByteArray())
 
-        val shortUrl = repository.findByShortUrlId(shortUrlId) ?: ShortUrl(
+        val shortUrl = repository.findByUrl(url) ?: ShortUrl(
             url=url,
             shortUrlId=shortUrlId,
         )
