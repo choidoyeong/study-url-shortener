@@ -9,7 +9,7 @@ import java.util.*
 @Service
 class UrlShortenerService(val repository: ShortUrlRepository) {
     fun createShortURL(url: String): ShortUrl {
-        val shortUrlId = Base64.getUrlEncoder().encode(url.toByteArray()).toString(Charset.defaultCharset())
+        val shortUrlId = Base64.getUrlEncoder().encodeToString(url.toByteArray())
 
         val shortUrl = repository.findByShortUrlId(shortUrlId) ?: ShortUrl(
             url=url,
