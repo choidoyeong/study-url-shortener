@@ -3,7 +3,6 @@ package com.example.urlshortener.services
 import com.example.urlshortener.models.ShortUrl
 import com.example.urlshortener.repositories.ShortUrlRepository
 import org.springframework.stereotype.Service
-import java.nio.charset.Charset
 import java.util.*
 
 @Service
