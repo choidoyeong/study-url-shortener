@@ -41,5 +41,24 @@ class UrlShortenerServiceTest {
 
     @Test
     fun getShortUrlByShortUrlId() {
+        every { repository.findByShortUrlId("1234") } returns ShortUrl(1, "http://example.com", "1234")
+
+        val result = service.getShortUrlByShortUrlId("1234")
+
+        verify { repository.findByShortUrlId("1234") }
+        assertNotNull(result)
+        assertEquals(1, result?.id)
+        assertEquals("http://example.com", result?.url)
+        assertEquals("1234", result?.shortUrlId)
+    }
+
+    @Test
+    fun getShortUrlByShortUrlIdNotExist() {
+        every { repository.findByShortUrlId(any()) } returns null
+
+        val result = service.getShortUrlByShortUrlId("123")
+
+        verify { repository.findByShortUrlId("123") }
+        assertNull(result)
     }
 }
